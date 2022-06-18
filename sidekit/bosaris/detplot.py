@@ -34,6 +34,8 @@ This is the 'detplot' module
 import numpy
 import matplotlib
 import os
+import math
+import numpy as np
 
 if "DISPLAY" not in os.environ:
     matplotlib.use('PDF', warn=False, force=True)
@@ -678,8 +680,8 @@ class DetPlot:
         if not self.__title__ == '':
             mpl.title(self.__title__)
         mpl.grid(True)
-        mpl.xlabel('False Acceptance Rate [in %]')
-        mpl.ylabel('False Rejection Rate [in %]')
+        mpl.xlabel('False Rejection Rate [in %]')
+        mpl.ylabel('False Acceptance Rate [in %]')
 
         # assuring, limits are kept by matplotlib after probit transform of axes
         mpl.gca().set_xlim(
@@ -764,7 +766,7 @@ class DetPlot:
         if matplotlib.get_backend() == 'agg':
             mpl.savefig(self.__title__ + '.pdf')
 
-    def plot_rocch_det(self, idx=0, style='color', target_prior=0.001, plot_args=''):
+    def plot_rocch_det(self, idx=3, style='color', target_prior=0.001, plot_args=''):
         """Plots a DET curve using the ROCCH.
 
         :param idx: index of the figure to plot on
@@ -792,8 +794,11 @@ class DetPlot:
         x, y, eer, mindcf = rocchdet(self.__tar__[idx], self.__non__[idx],
                                      tmp, pfa_min, pfa_max,
                                      pmiss_min, pmiss_max, dps, normalize=True)
-
-        fig = mpl.plot(x, y,
+        
+        xpoints = ypoints = mpl.xlim()
+        mpl.plot(xpoints, ypoints, linestyle='--', color='b', lw=1, scalex=False, scaley=False)
+       # mpl.plot( eer,eer, marker="o", color="r")
+        mpl.plot(x, y,
                        label='{}; (eer; minDCF) = ({:.03}; {:.04})'.format(
                            self.__sys_name__[idx],
                            100. * eer,
@@ -801,7 +806,14 @@ class DetPlot:
                        color=plot_args[0],
                        linestyle=plot_args[1],
                        linewidth=plot_args[2])
+
+
+               
         mpl.legend()
+        
+        
+  
+
         if matplotlib.get_backend() == 'agg':
             mpl.savefig(self.__title__ + '.pdf')
 
@@ -827,8 +839,15 @@ class DetPlot:
                             self.__plotwindow__.__pmiss_limits__[1])
         else:
             fig = mpl.plot(__probit__(pfa), __probit__(pmiss), plot_args)
+
+            
             if matplotlib.get_backend() == 'agg':
                 mpl.savefig(self.__title__ + '.pdf')
+
+
+  
+
+    
 
     def plot_DR30_fa(self,
                      idx=0,
