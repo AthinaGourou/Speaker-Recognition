@@ -224,10 +224,6 @@ class IVector(SidekitModel):
         filename = "ivector_scores_cos_{}.h5".format(self.NUM_GAUSSIANS)
         scores_cos_wccn.write(os.path.join(self.BASE_DIR, "result", filename))
         
-
-
-        #print(scores_cos_wccn)
-
         # Explain the Analysis by writing more readible text file
         if explain:
             modelset = list(scores_cos_wccn.modelset)
@@ -242,6 +238,50 @@ class IVector(SidekitModel):
                     fout.write("\Pathology {}:\t{}\n".format(pathology, scores[pathology_idx, seg_idx]))
                 fout.write("\n")
             fout.close()
+        
+        # Do mahalanobis distance
+        #logging.info("Calculating cosine score")
+        #test_ndx = sidekit.Ndx.read(os.path.join(self.BASE_DIR, "task", "test_ndx.h5"))
+       
+        #meanEFR, CovEFR = plda_iv.estimate_spectral_norm_stat1(3)
+
+        #plda_iv_efr1 = copy.deepcopy(plda_iv)
+        #enroll_iv_efr1 = copy.deepcopy(enroll_iv)
+        #test_iv_efr1 = copy.deepcopy(test_iv)
+
+        #plda_iv_efr1.spectral_norm_stat1(meanEFR[:1], CovEFR[:1])
+        #enroll_iv_efr1.spectral_norm_stat1(meanEFR[:1], CovEFR[:1])
+        #test_iv_efr1.spectral_norm_stat1(meanEFR[:1], CovEFR[:1])
+        #M1 = plda_iv_efr1.get_mahalanobis_matrix_stat1()
+        #scores_mah_efr1 = sidekit.iv_scoring.mahalanobis_scoring(enroll_iv_efr1, test_iv_efr1, test_ndx, M1)
+
+       # Write scores
+       # filename = "ivector_scores_cos_{}.h5".format(self.NUM_GAUSSIANS)
+       # scores_mah_efr1.write(os.path.join(self.BASE_DIR, "result", filename))
+
+        # Explain the Analysis by writing more readible text file
+        #if explain:
+        #    modelset = list(scores_mah_efr1.modelset)
+        #    segset = list(scores_mah_efr1.segset)
+        #    scores = np.array(scores_mah_efr1.scoremat)
+        #    filename = "ivector_scores_explained_{}.txt".format(iv.NUM_GAUSSIANS)
+        #    fout = open(os.path.join(iv.BASE_DIR, "result", filename), "a")
+        #    fout.truncate(0) #clear content
+        #    for seg_idx, seg in enumerate(segset):
+        #        fout.write("Wav: {}\n".format(seg))
+        #        for speaker_idx, speaker in enumerate(modelset):
+        #            fout.write("\tSpeaker {}:\t{}\n".format(speaker, scores[speaker_idx, seg_idx]))
+        #        fout.write("\n")
+        #    fout.close()
+        
+        
+      
+        
+
+
+        #print(scores_cos_wccn)
+
+       
         
     # def __plda():
         # plda = os.path.join(self.BASE_DIR, "stat", "plda_stat")
