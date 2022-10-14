@@ -255,9 +255,9 @@ class IVector(SidekitModel):
         #M1 = plda_iv_efr1.get_mahalanobis_matrix_stat1()
         #scores_mah_efr1 = sidekit.iv_scoring.mahalanobis_scoring(enroll_iv_efr1, test_iv_efr1, test_ndx, M1)
 
-       # Write scores
-       # filename = "ivector_scores_cos_{}.h5".format(self.NUM_GAUSSIANS)
-       # scores_mah_efr1.write(os.path.join(self.BASE_DIR, "result", filename))
+        # Write scores
+        # filename = "ivector_scores_cos_{}.h5".format(self.NUM_GAUSSIANS)
+        # scores_mah_efr1.write(os.path.join(self.BASE_DIR, "result", filename))
 
         # Explain the Analysis by writing more readible text file
         #if explain:
@@ -274,23 +274,44 @@ class IVector(SidekitModel):
         #        fout.write("\n")
         #    fout.close()
         
+        #WCCN-LDA
+        #LDA = plda_iv.get_lda_matrix_stat1(150)
+
+        #plda_iv_lda = copy.deepcopy(plda_iv)
+        #enroll_iv_lda = copy.deepcopy(enroll_iv)
+        #test_iv_lda = copy.deepcopy(test_iv)
+
+        #plda_iv_lda.rotate_stat1(LDA)
+        #enroll_iv_lda.rotate_stat1(LDA)
+        #test_iv_lda.rotate_stat1(LDA)
+
+        #scores_cos_lda = sidekit.iv_scoring.cosine_scoring(enroll_iv_lda, test_iv_lda, test_ndx, wccn=None)
+        #wccn = plda_iv_lda.get_wccn_choleski_stat1()
+        #scores_cos_lda_wcnn = sidekit.iv_scoring.cosine_scoring(enroll_iv_lda, test_iv_lda, test_ndx, wccn=wccn) 
         
-      
+        
+        
+        # Write scores
+        #filename = "ivector_scores_cos_{}.h5".format(self.NUM_GAUSSIANS)
+        #scores_cos_lda_wcnn.write(os.path.join(self.BASE_DIR, "result", filename))
+        
+        # Explain the Analysis by writing more readible text file
+        #if explain:
+        #    modelset = list(scores_cos_lda_wcnn.modelset)
+        #    segset = list(scores_cos_lda_wcnn.segset)
+        #    scores = np.array(scores_cos_lda_wcnn.scoremat)
+        #    filename = "ivector_scores_explained_{}.txt".format(iv.NUM_GAUSSIANS)
+        #    fout = open(os.path.join(iv.BASE_DIR, "result", filename), "a")
+        #    fout.truncate(0) #clear content
+        #    for seg_idx, seg in enumerate(segset):
+        #        fout.write("Wav: {}\n".format(seg))
+        #        for speaker_idx, speaker in enumerate(modelset):
+        #            fout.write("\tSpeaker {}:\t{}\n".format(speaker, scores[speaker_idx, seg_idx]))
+        #        fout.write("\n")
+        #    fout.close()      
         
 
 
-        #print(scores_cos_wccn)
-
-       
-        
-    # def __plda():
-        # plda = os.path.join(self.BASE_DIR, "stat", "plda_stat")
-        # # Load sufficient statistics and extract i-vectors from PLDA training data
-        # plda_iv = fa.extract_ivectors(ubm=ubm,
-        #                               stat_server_filename = plda,
-        #                               batch_size=self.BATCH_SIZE,
-        #                               num_thread=self.NUM_THREADS
-        #                              )
     def plotDETcurve(self):
         """
         This method is used to plot the DET (Detection Error Tradeoff) and 
